@@ -1,0 +1,25 @@
+node_modules/
+dist/
+.next/
+*.log
+.env
+.env.local
+.env.production
+.env.development
+*.tsbuildinfo
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Prisma
+backend/prisma/migrations/
+
+# Docker
+pgdata/

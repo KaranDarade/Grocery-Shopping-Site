@@ -1,0 +1,5 @@
+services:
+  backend:
+    command: npx tsx watch src/app.ts
+    environment:
+      NODE_ENV: development
