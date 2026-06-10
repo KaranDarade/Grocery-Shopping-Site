@@ -8,18 +8,6 @@ const productImageIds = [
   "1628088062854-b1870b1f6b9f",
   "1509440159596-0249088772ff",
   "1596040033229-a9821ebd058d",
-  "1606787711835-8c6c8c6c8c6c",
-  "1597361573561-3c6c8c6c8c6c",
-  "1610837909796-1c8c6c8c6c8c6",
-  "1573241975935-6c8c6c8c6c8c",
-  "1587049717453-5c6c8c6c8c6c6",
-  "1498837167922-7c6c8c8c8c8c",
-  "1504672280236-8c6c8c8c8c8c",
-  "1528973033317-8c6c8c8c8c8c",
-  "1540189549336-e6e8c8c8c8c8",
-  "1600899999999-8c6c8c6c8c6c",
-  "1519995149515-000000000000",
-  "1563821054401-8c6c8c6c8c6c",
 ];
 
 function getProductImage(index: number): string {
@@ -174,7 +162,7 @@ async function main() {
     {
       name: "Snacks & Munchies",
       slug: "snacks-munchies",
-      image: "https://images.unsplash.com/photo-1606787711835-8c6c8c6c8c6c?w=400&h=400&fit=crop",
+      image: "https://images.unsplash.com/photo-1542838132-92c53300491e?w=400&h=400&fit=crop",
       products: [
         { name: "Lays Classic Salted", price: 20, compareAt: 25, unit: "1 Pack", stock: 200, description: "Classic salted potato chips crispy and delicious." },
         { name: "Lays Magic Masala", price: 20, compareAt: 25, unit: "1 Pack", stock: 200, description: "Indian masala flavored chips with a spicy kick." },
@@ -203,7 +191,7 @@ async function main() {
     {
       name: "Breakfast & Cereals",
       slug: "breakfast-cereals",
-      image: "https://images.unsplash.com/photo-1573241975935-6c8c6c8c6c8c?w=400&h=400&fit=crop",
+      image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=400&h=400&fit=crop",
       products: [
         { name: "Kellogg's Corn Flakes", price: 150, compareAt: 185, unit: "500 GM", stock: 60, description: "Classic toasted corn flakes breakfast cereal." },
         { name: "Kellogg's Muesli Fruit", price: 250, compareAt: 310, unit: "500 GM", stock: 40, description: "Swiss style muesli with dried fruits and nuts." },
@@ -227,7 +215,7 @@ async function main() {
     {
       name: "Rice, Pasta & Noodles",
       slug: "rice-pasta-noodles",
-      image: "https://images.unsplash.com/photo-1587049717453-5c6c8c6c8c6c6?w=400&h=400&fit=crop",
+      image: "https://images.unsplash.com/photo-1628088062854-b1870b1f6b9f?w=400&h=400&fit=crop",
       products: [
         { name: "Basmati Rice Premium", price: 180, compareAt: 225, unit: "1 KG", stock: 80, description: "Premium long grain basmati rice for biryani." },
         { name: "Sona Masoori Rice", price: 75, compareAt: 95, unit: "1 KG", stock: 100, description: "Light and aromatic everyday rice from South India." },
@@ -301,7 +289,7 @@ async function main() {
     {
       name: "Sauces, Spreads & Condiments",
       slug: "sauces-spreads-condiments",
-      image: "https://images.unsplash.com/photo-1610837909796-1c8c6c8c6c8c6?w=400&h=400&fit=crop",
+      image: "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=400&h=400&fit=crop",
       products: [
         { name: "Tomato Ketchup", price: 45, compareAt: 58, unit: "500 GM", stock: 100, description: "Thick and rich tomato ketchup from Maggi." },
         { name: "Schezwan Sauce", price: 60, compareAt: 78, unit: "200 GM", stock: 70, description: "Spicy schezwan sauce for Indo-Chinese dishes." },
@@ -323,7 +311,7 @@ async function main() {
     {
       name: "Ready to Eat & Instant Foods",
       slug: "ready-to-eat-instant",
-      image: "https://images.unsplash.com/photo-1597361573561-3c6c8c6c8c6c?w=400&h=400&fit=crop",
+      image: "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=400&h=400&fit=crop",
       products: [
         { name: "MTR Pav Bhaji Mix", price: 55, compareAt: 70, unit: "200 GM", stock: 80, description: "Instant pav bhaji mix for restaurant-style taste." },
         { name: "MTR Sambar Mix", price: 50, compareAt: 65, unit: "200 GM", stock: 75, description: "Ready-to-cook sambar mix with authentic flavor." },
@@ -347,7 +335,7 @@ async function main() {
     {
       name: "Frozen Foods",
       slug: "frozen-foods",
-      image: "https://images.unsplash.com/photo-1565299585323-38c6c82f2f8b?w=400&h=400&fit=crop",
+      image: "https://images.unsplash.com/photo-1619566626922-71c5935a3e8c?w=400&h=400&fit=crop",
       products: [
         { name: "Frozen Green Peas", price: 60, compareAt: 78, unit: "500 GM", stock: 80, description: "Flash frozen green peas retaining natural sweetness." },
         { name: "Frozen Sweet Corn", price: 55, compareAt: 70, unit: "500 GM", stock: 75, description: "Sweet yellow corn kernels frozen at peak freshness." },
@@ -372,7 +360,7 @@ async function main() {
     {
       name: "Organic & Health Foods",
       slug: "organic-health-foods",
-      image: "https://images.unsplash.com/photo-1498837167922-7c6c8c8c8c8c?w=400&h=400&fit=crop",
+      image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=400&h=400&fit=crop",
       products: [
         { name: "Organic Brown Rice", price: 120, compareAt: 150, unit: "1 KG", stock: 50, description: "Certified organic brown rice with intact bran." },
         { name: "Organic Quinoa", price: 280, compareAt: 350, unit: "500 GM", stock: 30, description: "Protein-rich quinoa, a complete superfood grain." },
@@ -394,7 +382,7 @@ async function main() {
     {
       name: "Meat, Chicken & Seafood",
       slug: "meat-chicken-seafood",
-      image: "https://images.unsplash.com/photo-1607622731954-5a5a5a5a5a5a?w=400&h=400&fit=crop",
+      image: "https://images.unsplash.com/photo-1542838132-92c53300491e?w=400&h=400&fit=crop",
       products: [
         { name: "Chicken Breast Boneless", price: 220, compareAt: 270, unit: "500 GM", stock: 60, description: "Skinless boneless chicken breast lean and tender." },
         { name: "Chicken Thigh Boneless", price: 180, compareAt: 225, unit: "500 GM", stock: 55, description: "Boneless chicken thigh meat juicy and flavorful." },
@@ -419,7 +407,7 @@ async function main() {
     {
       name: "Baby & Kids Foods",
       slug: "baby-kids-foods",
-      image: "https://images.unsplash.com/photo-1504672280236-8c6c8c8c8c8c?w=400&h=400&fit=crop",
+      image: "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=400&h=400&fit=crop",
       products: [
         { name: "Cerelac Wheat", price: 160, compareAt: 200, unit: "300 GM", stock: 60, description: "Wheat-based infant cereal with milk and vitamins." },
         { name: "Cerelac Rice", price: 160, compareAt: 200, unit: "300 GM", stock: 55, description: "Rice-based baby cereal for early weaning." },
@@ -441,7 +429,7 @@ async function main() {
     {
       name: "Personal Care",
       slug: "personal-care",
-      image: "https://images.unsplash.com/photo-1528973033317-8c6c8c8c8c8c?w=400&h=400&fit=crop",
+      image: "https://images.unsplash.com/photo-1628088062854-b1870b1f6b9f?w=400&h=400&fit=crop",
       products: [
         { name: "Lifebuoy Soap", price: 35, compareAt: 48, unit: "1 Pack", stock: 120, description: "Antibacterial soap for complete germ protection." },
         { name: "Dettol Soap", price: 40, compareAt: 52, unit: "1 Pack", stock: 100, description: "Skin care soap with Dettol antiseptic protection." },
@@ -466,7 +454,7 @@ async function main() {
     {
       name: "Household Essentials",
       slug: "household-essentials",
-      image: "https://images.unsplash.com/photo-1540189549336-e6e8c8c8c8c8?w=400&h=400&fit=crop",
+      image: "https://images.unsplash.com/photo-1566385101042-1a0aa68c5e47?w=400&h=400&fit=crop",
       products: [
         { name: "Surf Excel Detergent", price: 180, compareAt: 225, unit: "1 KG", stock: 80, description: "Front-load laundry detergent for deep stain removal." },
         { name: "Tide Detergent", price: 160, compareAt: 200, unit: "1 KG", stock: 90, description: "Laundry detergent that removes tough stains." },
@@ -488,7 +476,7 @@ async function main() {
     {
       name: "Pet Supplies",
       slug: "pet-supplies",
-      image: "https://images.unsplash.com/photo-1600899999999-8c6c8c6c8c6c?w=400&h=400&fit=crop",
+      image: "https://images.unsplash.com/photo-1619566626922-71c5935a3e8c?w=400&h=400&fit=crop",
       products: [
         { name: "Pedigree Dog Food Dry", price: 280, compareAt: 350, unit: "1 KG", stock: 40, description: "Complete dry dog food with chicken and vegetables." },
         { name: "Pedigree Wet Food", price: 60, compareAt: 78, unit: "1 Pouch", stock: 60, description: "Gravy-style wet dog food with real chicken." },
@@ -508,7 +496,7 @@ async function main() {
     {
       name: "Beauty & Cosmetics",
       slug: "beauty-cosmetics",
-      image: "https://images.unsplash.com/photo-1519995149515-000000000000?w=400&h=400&fit=crop",
+      image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=400&h=400&fit=crop",
       products: [
         { name: "Maybelline Foundation", price: 320, compareAt: 400, unit: "1 Piece", stock: 40, description: "Liquid foundation with natural matte finish." },
         { name: "Lakme Face Powder", price: 180, compareAt: 225, unit: "1 Piece", stock: 55, description: "Compact face powder for oil-free glow." },
@@ -533,7 +521,7 @@ async function main() {
     {
       name: "Tea, Coffee & Health Drinks",
       slug: "tea-coffee-health-drinks",
-      image: "https://images.unsplash.com/photo-1563821054401-8c6c8c6c8c6c?w=400&h=400&fit=crop",
+      image: "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=400&h=400&fit=crop",
       products: [
         { name: "Tata Tea Gold", price: 160, compareAt: 200, unit: "500 GM", stock: 80, description: "Premium CTC tea with rich golden color." },
         { name: "Taj Mahal Tea", price: 180, compareAt: 225, unit: "500 GM", stock: 70, description: "Luxurious tea blend with delicate flavor." },
@@ -605,7 +593,7 @@ async function main() {
     {
       name: "Sweets & Indian Mithai",
       slug: "sweets-indian-mithai",
-      image: "https://images.unsplash.com/photo-1597361573561-3c6c8c6c8c6c?w=400&h=400&fit=crop",
+      image: "https://images.unsplash.com/photo-1619566626922-71c5935a3e8c?w=400&h=400&fit=crop",
       products: [
         { name: "Kaju Katli", price: 280, compareAt: 350, unit: "250 GM", stock: 40, description: "Diamond-shaped cashew fudge with silver leaf." },
         { name: "Barfi Coconut", price: 180, compareAt: 225, unit: "250 GM", stock: 45, description: "Creamy coconut barfi with cardamom flavor." },
