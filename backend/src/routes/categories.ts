@@ -1,9 +1,8 @@
 import { Router } from "express";
+import { getCategories } from "../controllers/categories.js";
 
 const router = Router();
 
-router.get("/", (_req, res) => {
-  res.json({ message: "Categories list endpoint" });
-});
+router.get("/", getCategories);
 
 export default router;

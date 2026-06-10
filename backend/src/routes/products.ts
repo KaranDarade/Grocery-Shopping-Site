@@ -1,13 +1,10 @@
 import { Router } from "express";
+import { getProducts, getProductBySlug, getFeaturedProducts } from "../controllers/products.js";
 
 const router = Router();
 
-router.get("/", (_req, res) => {
-  res.json({ message: "Products list endpoint" });
-});
-
-router.get("/:slug", (_req, res) => {
-  res.json({ message: "Product detail endpoint" });
-});
+router.get("/", getProducts);
+router.get("/featured", getFeaturedProducts);
+router.get("/:slug", getProductBySlug);
 
 export default router;
