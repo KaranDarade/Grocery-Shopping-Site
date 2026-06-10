@@ -2,10 +2,11 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { ShoppingBag, User, Menu, X, Search } from "lucide-react";
+import { ShoppingBag, User, Menu, X, Search, LogOut, UserCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@/contexts/AuthContext";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -19,6 +20,14 @@ export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const { user, logout } = useAuth();
+
+  const handleLogout = async () => {
+    await logout();
+    setMobileMenuOpen(false);
+  };
+
+  const displayName = user?.name?.split(" ")[0] || user?.email?.split("@")[0] || "Account";
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 border-b border-border/40 bg-white/80 nav-blur">
@@ -79,11 +88,27 @@ export function Navbar() {
               </Button>
             </Link>
 
-            <Link href="/login">
-              <Button variant="ghost" size="icon">
-                <User className="h-5 w-5" />
-              </Button>
-            </Link>
+            {user ? (
+              <div className="hidden lg:flex items-center gap-1">
+                <Link href="/account">
+                  <Button variant="ghost" size="icon" className="relative group">
+                    <UserCircle className="h-5 w-5" />
+                    <span className="absolute -bottom-5 left-1/2 -translate-x-1/2 text-[10px] font-medium text-muted-foreground whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">
+                      {displayName}
+                    </span>
+                  </Button>
+                </Link>
+                <Button variant="ghost" size="icon" onClick={handleLogout}>
+                  <LogOut className="h-5 w-5" />
+                </Button>
+              </div>
+            ) : (
+              <Link href="/login">
+                <Button variant="ghost" size="icon">
+                  <User className="h-5 w-5" />
+                </Button>
+              </Link>
+            )}
 
             {/* Mobile Menu Toggle */}
             <Button
@@ -102,6 +127,15 @@ export function Navbar() {
       {mobileMenuOpen && (
         <div className="lg:hidden border-t border-border/40 bg-white animate-fade-in">
           <div className="container mx-auto px-4 py-4 space-y-2">
+            {user && (
+              <div className="px-4 py-3 flex items-center gap-3 border-b border-border/40 mb-2">
+                <UserCircle className="h-8 w-8 text-primary" />
+                <div>
+                  <p className="text-sm font-medium">{user.name}</p>
+                  <p className="text-xs text-muted-foreground">{user.email}</p>
+                </div>
+              </div>
+            )}
             {navLinks.map((link) => (
               <Link
                 key={link.href}
@@ -113,12 +147,25 @@ export function Navbar() {
               </Link>
             ))}
             <div className="pt-2 border-t border-border/40">
-              <Link href="/login" className="block px-4 py-3 text-sm font-medium rounded-lg hover:bg-primary-light">
-                Sign In
-              </Link>
-              <Link href="/register" className="block px-4 py-3 text-sm font-medium rounded-lg hover:bg-primary-light">
-                Create Account
-              </Link>
+              {user ? (
+                <>
+                  <Link href="/account" className="block px-4 py-3 text-sm font-medium rounded-lg hover:bg-primary-light" onClick={() => setMobileMenuOpen(false)}>
+                    My Account
+                  </Link>
+                  <button className="w-full text-left px-4 py-3 text-sm font-medium rounded-lg hover:bg-primary-light" onClick={handleLogout}>
+                    Sign Out
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link href="/login" className="block px-4 py-3 text-sm font-medium rounded-lg hover:bg-primary-light" onClick={() => setMobileMenuOpen(false)}>
+                    Sign In
+                  </Link>
+                  <Link href="/register" className="block px-4 py-3 text-sm font-medium rounded-lg hover:bg-primary-light" onClick={() => setMobileMenuOpen(false)}>
+                    Create Account
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         </div>

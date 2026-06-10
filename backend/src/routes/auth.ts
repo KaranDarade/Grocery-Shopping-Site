@@ -1,25 +1,13 @@
 import { Router } from "express";
+import { register, login, logout, getMe, refresh } from "../controllers/auth.js";
+import { requireAuth } from "../middleware/auth.js";
 
 const router = Router();
 
-router.post("/register", (_req, res) => {
-  res.json({ message: "Register endpoint" });
-});
-
-router.post("/login", (_req, res) => {
-  res.json({ message: "Login endpoint" });
-});
-
-router.post("/logout", (_req, res) => {
-  res.json({ message: "Logout endpoint" });
-});
-
-router.get("/me", (_req, res) => {
-  res.json({ message: "Current user endpoint" });
-});
-
-router.post("/refresh", (_req, res) => {
-  res.json({ message: "Token refresh endpoint" });
-});
+router.post("/register", register);
+router.post("/login", login);
+router.post("/logout", logout);
+router.get("/me", requireAuth, getMe);
+router.post("/refresh", refresh);
 
 export default router;

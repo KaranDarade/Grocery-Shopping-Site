@@ -3,12 +3,47 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Leaf, Eye, EyeOff } from "lucide-react";
+import { Leaf, Eye, EyeOff, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { useAuth } from "@/contexts/AuthContext";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+
+const registerSchema = z.object({
+  name: z.string().min(1, "Name is required"),
+  email: z.string().email("Please enter a valid email"),
+  phone: z.string().optional(),
+  password: z.string().min(6, "Password must be at least 6 characters"),
+});
+
+type RegisterForm = z.infer<typeof registerSchema>;
 
 export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
+  const { register: registerUser } = useAuth();
+  const router = useRouter();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<RegisterForm>({
+    resolver: zodResolver(registerSchema),
+  });
+
+  const onSubmit = async (data: RegisterForm) => {
+    try {
+      await registerUser(data.name, data.email, data.password, data.phone || undefined);
+      router.push("/");
+    } catch (err: any) {
+      const message = err?.response?.data?.message || "Something went wrong. Please try again.";
+      toast.error(message);
+    }
+  };
 
   return (
     <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center px-4 py-12">
@@ -23,18 +58,41 @@ export default function RegisterPage() {
           <p className="text-sm text-muted-foreground mt-1">Join us and start shopping</p>
         </CardHeader>
         <CardContent className="p-8">
-          <form className="space-y-4">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div>
               <label className="text-sm font-medium mb-1.5 block">Full Name</label>
-              <Input placeholder="John Doe" className="h-11" />
+              <Input
+                placeholder="John Doe"
+                className="h-11"
+                {...register("name")}
+              />
+              {errors.name && (
+                <p className="text-sm text-destructive mt-1">{errors.name.message}</p>
+              )}
             </div>
             <div>
               <label className="text-sm font-medium mb-1.5 block">Email</label>
-              <Input type="email" placeholder="you@example.com" className="h-11" />
+              <Input
+                type="email"
+                placeholder="you@example.com"
+                className="h-11"
+                {...register("email")}
+              />
+              {errors.email && (
+                <p className="text-sm text-destructive mt-1">{errors.email.message}</p>
+              )}
             </div>
             <div>
               <label className="text-sm font-medium mb-1.5 block">Phone (optional)</label>
-              <Input type="tel" placeholder="9876543210" className="h-11" />
+              <Input
+                type="tel"
+                placeholder="9876543210"
+                className="h-11"
+                {...register("phone")}
+              />
+              {errors.phone && (
+                <p className="text-sm text-destructive mt-1">{errors.phone.message}</p>
+              )}
             </div>
             <div>
               <label className="text-sm font-medium mb-1.5 block">Password</label>
@@ -43,6 +101,7 @@ export default function RegisterPage() {
                   type={showPassword ? "text" : "password"}
                   placeholder="Create a strong password"
                   className="h-11 pr-10"
+                  {...register("password")}
                 />
                 <button
                   type="button"
@@ -52,9 +111,13 @@ export default function RegisterPage() {
                   {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                 </button>
               </div>
+              {errors.password && (
+                <p className="text-sm text-destructive mt-1">{errors.password.message}</p>
+              )}
             </div>
-            <Button type="submit" className="w-full h-11 rounded-full">
-              Create Account
+            <Button type="submit" className="w-full h-11 rounded-full" disabled={isSubmitting}>
+              {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
+              {isSubmitting ? "Creating Account..." : "Create Account"}
             </Button>
           </form>
           <p className="text-center text-sm text-muted-foreground mt-6">
