@@ -1,9 +1,12 @@
 import type { Request, Response, NextFunction } from "express";
 import bcrypt from "bcryptjs";
 import jwt, { type SignOptions } from "jsonwebtoken";
+import { OAuth2Client } from "google-auth-library";
 import prisma from "../utils/prisma.js";
 import { config } from "../config/index.js";
 import { AppError } from "../middleware/errorHandler.js";
+
+const googleClient = new OAuth2Client(config.googleClientId);
 
 const generateAccessToken = (userId: string, role: string): string => {
   return jwt.sign({ userId, role }, config.jwt.secret, {
@@ -158,6 +161,50 @@ export const refresh = async (
     setRefreshCookie(res, refreshToken);
 
     res.json({ accessToken });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const googleAuth = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { credential } = req.body;
+    if (!credential) throw new AppError("Google credential is required", 400);
+
+    const ticket = await googleClient.verifyIdToken({
+      idToken: credential,
+      audience: config.googleClientId,
+    });
+    const payload = ticket.getPayload();
+    if (!payload || !payload.email) throw new AppError("Invalid Google token", 401);
+
+    const { email, name } = payload;
+
+    let user = await prisma.user.findUnique({ where: { email } });
+    if (!user) {
+      user = await prisma.user.create({
+        data: {
+          name: name || email.split("@")[0],
+          email,
+          passwordHash: "",
+          role: "USER",
+        },
+      });
+    }
+
+    const accessToken = generateAccessToken(user.id, user.role);
+    const refreshToken = generateRefreshToken(user.id);
+
+    setRefreshCookie(res, refreshToken);
+
+    res.json({
+      user: { id: user.id, name: user.name, email: user.email, role: user.role },
+      accessToken,
+    });
   } catch (error) {
     next(error);
   }

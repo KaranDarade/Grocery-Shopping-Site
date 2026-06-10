@@ -21,6 +21,7 @@ export const config = {
     region: process.env.AWS_REGION || "ap-south-1",
     s3Bucket: process.env.AWS_S3_BUCKET || "grocery-images",
   },
+  googleClientId: process.env.GOOGLE_CLIENT_ID || "",
   redis: {
     url: process.env.REDIS_URL || "redis://localhost:6379",
   },

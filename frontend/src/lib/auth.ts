@@ -36,3 +36,8 @@ export async function getMeApi(): Promise<MeResponse> {
   const { data } = await api.get("/auth/me");
   return data;
 }
+
+export async function googleAuthApi(credential: string): Promise<AuthResponse> {
+  const { data } = await api.post("/auth/google", { credential });
+  return data;
+}

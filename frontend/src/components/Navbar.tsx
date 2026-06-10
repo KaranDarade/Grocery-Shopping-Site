@@ -53,6 +53,14 @@ export function Navbar() {
                 {link.label}
               </Link>
             ))}
+            {user?.role === "ADMIN" && (
+              <Link
+                href="/admin/users"
+                className="px-4 py-2 text-sm font-medium text-secondary hover:text-secondary/80 rounded-lg hover:bg-secondary/10 transition-all duration-200"
+              >
+                Admin
+              </Link>
+            )}
           </nav>
 
           {/* Right Side */}
@@ -146,6 +154,15 @@ export function Navbar() {
                 {link.label}
               </Link>
             ))}
+            {user?.role === "ADMIN" && (
+              <Link
+                href="/admin/users"
+                className="block px-4 py-3 text-sm font-medium rounded-lg hover:bg-secondary/10 text-secondary"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Admin Panel
+              </Link>
+            )}
             <div className="pt-2 border-t border-border/40">
               {user ? (
                 <>

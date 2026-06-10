@@ -1,4 +1,5 @@
 ﻿import { PrismaClient } from "@prisma/client";
+import bcrypt from "bcryptjs";
 const prisma = new PrismaClient();
 
 const productImageIds = [
@@ -628,24 +629,24 @@ async function main() {
   await prisma.user.deleteMany();
   console.log("Cleared all existing data.");
 
-  // Create admin user
+  const passwordHash = await bcrypt.hash("password123", 12);
+
   const admin = await prisma.user.create({
     data: {
       name: "Admin",
       email: "admin@grocery.com",
-      passwordHash: "$2a$12$dummyhashfordevpurposesonly",
+      passwordHash,
       role: "ADMIN",
       phone: "9876543210",
     },
   });
   console.log(`Created admin user: ${admin.email}`);
 
-  // Create a demo user
   const demoUser = await prisma.user.create({
     data: {
       name: "Demo User",
       email: "user@demo.com",
-      passwordHash: "$2a$12$dummyhashfordevpurposesonly",
+      passwordHash,
       role: "USER",
       phone: "9876543211",
     },
