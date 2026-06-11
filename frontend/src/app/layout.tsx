@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Inter, Plus_Jakarta_Sans } from "next/font/google";
-import { GoogleOAuthProvider } from "@react-oauth/google";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { PageTransition } from "@/components/PageTransition";
@@ -41,8 +40,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${plusJakarta.variable}`}>
       <body className="min-h-screen bg-white">
-        <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || ""}>
-          <AuthProvider>
+        <AuthProvider>
             <Navbar />
             <main className="pt-16">
               <PageTransition>{children}</PageTransition>
@@ -50,7 +48,6 @@ export default function RootLayout({
             <Footer />
             <Toaster richColors closeButton />
           </AuthProvider>
-        </GoogleOAuthProvider>
       </body>
     </html>
   );

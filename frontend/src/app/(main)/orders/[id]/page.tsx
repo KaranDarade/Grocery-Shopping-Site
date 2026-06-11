@@ -347,28 +347,20 @@ export default function OrderDetailPage() {
                     </div>
                   </div>
 
-                  {(order.payment || order.razorpayOrderId) && (
-                    <div className="border-t pt-3 space-y-2">
-                      <h3 className="text-sm font-semibold flex items-center gap-1.5">
-                        <CreditCard className="h-4 w-4 text-primary" />
-                        Payment
-                      </h3>
-                      <div className="text-xs text-muted-foreground space-y-1">
-                        <p>Paid via Razorpay</p>
-                        {order.payment?.razorpayPaymentId && (
-                          <p className="font-mono">ID: {order.payment.razorpayPaymentId}</p>
-                        )}
-                      </div>
-                      <Badge
-                        className={cn(
-                          "text-[10px]",
-                          paymentStatusStyles[order.paymentStatus] || ""
-                        )}
-                      >
-                        {order.paymentStatus}
-                      </Badge>
-                    </div>
-                  )}
+                  <div className="border-t pt-3 space-y-2">
+                    <h3 className="text-sm font-semibold flex items-center gap-1.5">
+                      <CreditCard className="h-4 w-4 text-primary" />
+                      Payment Status
+                    </h3>
+                    <Badge
+                      className={cn(
+                        "text-[10px]",
+                        paymentStatusStyles[order.paymentStatus] || ""
+                      )}
+                    >
+                      {order.paymentStatus}
+                    </Badge>
+                  </div>
                 </CardContent>
               </Card>
             </motion.div>

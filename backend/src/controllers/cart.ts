@@ -50,6 +50,13 @@ export const addToCart = async (
       throw new AppError("Product not found or unavailable", 404);
     }
 
+    if (quantity > product.stock) {
+      throw new AppError(
+        `Insufficient stock for ${product.name}. Available: ${product.stock}`,
+        400
+      );
+    }
+
     const item = await prisma.cartItem.upsert({
       where: {
         userId_productId: {
@@ -98,7 +105,10 @@ export const updateCartItem = async (
     const { id } = req.params;
     const { quantity } = req.body;
 
-    const cartItem = await prisma.cartItem.findUnique({ where: { id } });
+    const cartItem = await prisma.cartItem.findUnique({
+      where: { id },
+      include: { product: true },
+    });
 
     if (!cartItem || cartItem.userId !== req.user!.userId) {
       throw new AppError("Cart item not found", 404);
@@ -107,6 +117,13 @@ export const updateCartItem = async (
     if (quantity === 0) {
       await prisma.cartItem.delete({ where: { id } });
       return res.json({ message: "Item removed" });
+    }
+
+    if (quantity > cartItem.product.stock) {
+      throw new AppError(
+        `Insufficient stock. Available: ${cartItem.product.stock}`,
+        400
+      );
     }
 
     const item = await prisma.cartItem.update({

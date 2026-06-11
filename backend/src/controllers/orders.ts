@@ -8,10 +8,10 @@ export const createOrder = async (
   next: NextFunction
 ) => {
   try {
-    const userId = req.user!.userId;
+    const { shippingAddress } = req.body;
 
     const cartItems = await prisma.cartItem.findMany({
-      where: { userId },
+      where: { userId: req.user!.userId },
       include: { product: true },
     });
 
@@ -19,16 +19,27 @@ export const createOrder = async (
       throw new AppError("Cart is empty", 400);
     }
 
+    // Validate stock
+    for (const item of cartItems) {
+      if (item.quantity > item.product.stock) {
+        throw new AppError(
+          `Insufficient stock for ${item.product.name}. Available: ${item.product.stock}`,
+          400
+        );
+      }
+    }
+
     const total = cartItems.reduce(
       (sum, item) => sum + Number(item.product.price) * item.quantity,
       0
     );
 
-    const order = await prisma.$transaction(async (tx) => {
-      const order = await tx.order.create({
+    const [order] = await prisma.$transaction([
+      prisma.order.create({
         data: {
-          userId,
+          userId: req.user!.userId,
           total,
+          shippingAddress: shippingAddress || "Demo Address, City",
           items: {
             create: cartItems.map((item) => ({
               productId: item.productId,
@@ -37,26 +48,12 @@ export const createOrder = async (
             })),
           },
         },
-        include: { items: true },
-      });
+        include: { items: { include: { product: true } } },
+      }),
+      prisma.cartItem.deleteMany({ where: { userId: req.user!.userId } }),
+    ]);
 
-      await tx.cartItem.deleteMany({ where: { userId } });
-
-      return order;
-    });
-
-    res.status(201).json({
-      order: {
-        id: order.id,
-        total: Number(order.total),
-        status: order.status,
-        items: order.items.map((item) => ({
-          ...item,
-          price: Number(item.price),
-        })),
-        createdAt: order.createdAt,
-      },
-    });
+    res.status(201).json({ order });
   } catch (error) {
     next(error);
   }

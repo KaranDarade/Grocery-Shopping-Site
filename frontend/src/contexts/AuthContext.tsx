@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState, useCallback, type ReactNode } from "react";
-import { getMeApi, loginApi, registerApi, logoutApi, googleAuthApi, type AuthUser } from "@/lib/auth";
+import { getMeApi, loginApi, registerApi, logoutApi, type AuthUser } from "@/lib/auth";
 
 interface AuthContextType {
   user: AuthUser | null;
@@ -9,7 +9,6 @@ interface AuthContextType {
   login: (email: string, password: string) => Promise<void>;
   register: (name: string, email: string, password: string, phone?: string) => Promise<void>;
   logout: () => Promise<void>;
-  googleLogin: (credential: string) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -35,18 +34,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(res.user);
   }, []);
 
-  const googleLogin = useCallback(async (credential: string) => {
-    const res = await googleAuthApi(credential);
-    setUser(res.user);
-  }, []);
-
   const logout = useCallback(async () => {
     await logoutApi();
     setUser(null);
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, register, logout, googleLogin }}>
+    <AuthContext.Provider value={{ user, loading, login, register, logout }}>
       {children}
     </AuthContext.Provider>
   );

@@ -177,17 +177,8 @@ export async function getOrderById(
   return data;
 }
 
-export async function createOrder(): Promise<{ order: Order }> {
-  const { data } = await api.post("/orders");
+export async function createOrder(payload?: { shippingAddress?: string }): Promise<{ order: Order }> {
+  const { data } = await api.post("/orders", payload);
   return data;
 }
 
-export async function createRazorpayOrder(orderId: string): Promise<{ razorpayOrderId: string; amount: number; currency: string; keyId: string }> {
-  const { data } = await api.post("/payments/create-order", { orderId });
-  return data;
-}
-
-export async function verifyPayment(payload: { razorpayOrderId: string; razorpayPaymentId: string; razorpaySignature: string }): Promise<{ message: string; order: Order }> {
-  const { data } = await api.post("/payments/verify", payload);
-  return data;
-}

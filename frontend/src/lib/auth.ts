@@ -37,7 +37,3 @@ export async function getMeApi(): Promise<MeResponse> {
   return data;
 }
 
-export async function googleAuthApi(credential: string): Promise<AuthResponse> {
-  const { data } = await api.post("/auth/google", { credential });
-  return data;
-}

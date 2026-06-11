@@ -2,17 +2,36 @@
 import bcrypt from "bcryptjs";
 const prisma = new PrismaClient();
 
-const productImageIds = [
-  "1542838132-92c53300491e",
-  "1566385101042-1a0aa68c5e47",
-  "1619566626922-71c5935a3e8c",
-  "1628088062854-b1870b1f6b9f",
-  "1509440159596-0249088772ff",
-  "1596040033229-a9821ebd058d",
-];
+const categoryImageTerms: Record<string, string> = {
+  "vegetables": "vegetables,vegetable,food,produce",
+  "fruits": "fruits,fruit,produce",
+  "dairy-eggs-cheese": "dairy,cheese,milk,eggs",
+  "bread-bakery": "bakery,bread,pastry",
+  "beverages": "beverages,drinks,juice",
+  "snacks-munchies": "snacks,chips,nuts",
+  "breakfast-cereals": "cereal,breakfast,granola",
+  "rice-pasta-noodles": "rice,pasta,noodles",
+  "cooking-oils-ghee": "cooking,oil,ghee",
+  "spices-seasonings": "spices,seasonings,herbs",
+  "sauces-spreads-condiments": "sauces,condiments,ketchup",
+  "ready-to-eat-instant": "instant,food,ready-to-eat",
+  "frozen-foods": "frozen,ice-cream,food",
+  "organic-health-foods": "organic,health,food,nuts",
+  "meat-chicken-seafood": "meat,chicken,fish,seafood",
+  "baby-kids-foods": "baby,food,kids",
+  "personal-care": "personal-care,cosmetics,soap",
+  "household-essentials": "household,cleaning",
+  "pet-supplies": "pet,dog,cat,pet-food",
+  "beauty-cosmetics": "beauty,cosmetics,makeup",
+  "tea-coffee-health-drinks": "tea,coffee,health-drink",
+  "pickles-chutneys": "pickles,chutney,indian-food",
+  "dry-fruits-nuts-seeds": "nuts,dry-fruits,seeds",
+  "sweets-indian-mithai": "sweets,indian-sweets,dessert",
+};
 
-function getProductImage(index: number): string {
-  return `https://images.unsplash.com/photo-${productImageIds[index % productImageIds.length]}?w=400&h=400&fit=crop`;
+function getProductImage(categorySlug: string, productIndex: number): string {
+  const terms = categoryImageTerms[categorySlug] || "food,grocery";
+  return `https://loremflickr.com/400/400/${terms}?lock=${productIndex + 1}`;
 }
 
 async function main() {
@@ -681,7 +700,7 @@ async function main() {
           categoryId: category.id,
           isAvailable: true,
           isFeatured: Math.random() > 0.7,
-          images: [getProductImage(productIndex)],
+          images: [getProductImage(cat.slug, productIndex)],
           description: prod.description,
         },
       });

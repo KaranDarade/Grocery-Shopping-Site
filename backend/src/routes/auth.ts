@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { register, login, logout, getMe, refresh, googleAuth } from "../controllers/auth.js";
+import { register, login, logout, getMe, refresh } from "../controllers/auth.js";
 import { requireAuth } from "../middleware/auth.js";
 
 const router = Router();
@@ -9,6 +9,5 @@ router.post("/login", login);
 router.post("/logout", logout);
 router.get("/me", requireAuth, getMe);
 router.post("/refresh", refresh);
-router.post("/google", googleAuth);
 
 export default router;
