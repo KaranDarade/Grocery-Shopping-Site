@@ -3,6 +3,7 @@ import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { PageTransition } from "@/components/PageTransition";
 import { Toaster } from "sonner";
 import { AuthProvider } from "@/contexts/AuthContext";
 import "./globals.css";
@@ -18,8 +19,18 @@ const plusJakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Groceries - Fresh Organic Food Delivered",
-  description: "Your trusted source for fresh, organic groceries delivered straight to your doorstep.",
+  title: {
+    default: "Groceries - Fresh Organic Food Delivered",
+    template: "%s | Groceries",
+  },
+  description: "Your trusted source for fresh, organic groceries delivered straight to your doorstep. Shop from 2000+ products with free delivery.",
+  keywords: ["grocery", "organic", "fresh food", "online grocery", "food delivery", "vegetables", "fruits"],
+  openGraph: {
+    title: "Groceries - Fresh Organic Food Delivered",
+    description: "Shop fresh organic groceries online with free delivery.",
+    type: "website",
+    locale: "en_IN",
+  },
 };
 
 export default function RootLayout({
@@ -33,7 +44,9 @@ export default function RootLayout({
         <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || ""}>
           <AuthProvider>
             <Navbar />
-            <main className="pt-16">{children}</main>
+            <main className="pt-16">
+              <PageTransition>{children}</PageTransition>
+            </main>
             <Footer />
             <Toaster richColors closeButton />
           </AuthProvider>
