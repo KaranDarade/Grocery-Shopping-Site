@@ -1,17 +1,17 @@
 import { Router } from "express";
+import { requireAuth } from "../middleware/auth.js";
+import {
+  createOrder,
+  getOrders,
+  getOrderById,
+} from "../controllers/orders.js";
 
 const router = Router();
 
-router.get("/", (_req, res) => {
-  res.json({ message: "Orders list endpoint" });
-});
+router.use(requireAuth);
 
-router.get("/:id", (_req, res) => {
-  res.json({ message: "Order detail endpoint" });
-});
-
-router.post("/", (_req, res) => {
-  res.json({ message: "Create order endpoint" });
-});
+router.get("/", getOrders);
+router.post("/", createOrder);
+router.get("/:id", getOrderById);
 
 export default router;

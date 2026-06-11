@@ -97,3 +97,97 @@ export async function getCategories(): Promise<{
   const { data } = await api.get("/categories");
   return data;
 }
+
+export interface CartItem {
+  id: string;
+  userId: string;
+  productId: string;
+  quantity: number;
+  product: Product;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export async function getCart(): Promise<{ items: CartItem[] }> {
+  const { data } = await api.get("/cart");
+  return data;
+}
+
+export async function addToCart(productId: string, quantity?: number): Promise<{ item: CartItem }> {
+  const { data } = await api.post("/cart", { productId, quantity });
+  return data;
+}
+
+export async function updateCartItem(id: string, quantity: number): Promise<{ item: CartItem }> {
+  const { data } = await api.patch(`/cart/${id}`, { quantity });
+  return data;
+}
+
+export async function removeCartItem(id: string): Promise<void> {
+  await api.delete(`/cart/${id}`);
+}
+
+export interface OrderItem {
+  id: string;
+  productId: string;
+  quantity: number;
+  price: number;
+  product: { id: string; name: string; slug: string; images: string[]; unit: string };
+}
+
+export interface Payment {
+  id: string;
+  razorpayOrderId: string;
+  razorpayPaymentId: string | null;
+  status: string;
+  amount: number;
+}
+
+export interface Order {
+  id: string;
+  userId: string;
+  total: number;
+  status: string;
+  paymentStatus: string;
+  shippingAddress: any;
+  razorpayOrderId: string | null;
+  items: OrderItem[];
+  payment: Payment | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface OrdersResponse {
+  orders: Order[];
+  pagination: PaginationInfo;
+}
+
+export async function getOrders(params?: {
+  page?: number;
+  limit?: number;
+}): Promise<OrdersResponse> {
+  const { data } = await api.get("/orders", { params });
+  return data;
+}
+
+export async function getOrderById(
+  id: string
+): Promise<{ order: Order }> {
+  const { data } = await api.get(`/orders/${id}`);
+  return data;
+}
+
+export async function createOrder(): Promise<{ order: Order }> {
+  const { data } = await api.post("/orders");
+  return data;
+}
+
+export async function createRazorpayOrder(orderId: string): Promise<{ razorpayOrderId: string; amount: number; currency: string; keyId: string }> {
+  const { data } = await api.post("/payments/create-order", { orderId });
+  return data;
+}
+
+export async function verifyPayment(payload: { razorpayOrderId: string; razorpayPaymentId: string; razorpaySignature: string }): Promise<{ message: string; order: Order }> {
+  const { data } = await api.post("/payments/verify", payload);
+  return data;
+}
